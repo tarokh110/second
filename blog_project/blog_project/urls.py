@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls'))
+    path('users/', include('user.urls')), # new
+    path('users/', include('django.contrib.auth.urls')),
+    path('articles/', include('articles.urls')),
+    #But we don’t want to build a dedicated
+    #pages app just yet, so we can use the shortcut of importing TemplateView and setting
+    #the template_name right in our url pattern.
+    path('', TemplateView.as_view(template_name='home.html'), name ='home'),
 ]
