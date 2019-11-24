@@ -11,6 +11,20 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from django.apps import AppConfig
+
+
+# make sure this file is initialized
+# when the Django application is launched by the internal Django
+# application registry
+class MainConfig(AppConfig):
+    name = 'main'
+
+    def ready(self):
+        from . import signals
+
+#----------------------------------------------____________---
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'crispy_forms',
+    'crispy_forms.bootstrap',
+    'shop.apps.ShopConfig',
 
 ]
 
@@ -125,3 +143,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
